@@ -78,6 +78,11 @@ func main() {
 
 	case 4:
 		fmt.Println("===Hapus Tugas===")
+		lihatTugas()
+		fmt.Print("Hapus Nomor : ")
+		fmt.Scanln(&no)
+		todoList = append(todoList[:no-1], todoList[no:]...)
+		lihatTugas()
 	case 5:
 		fmt.Println("===Keluar===")
 
