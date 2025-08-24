@@ -1,6 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"os/exec"
+	"runtime"
+)
 
 type Tugas struct {
 	No        int
@@ -10,12 +16,26 @@ type Tugas struct {
 
 var todoList []Tugas
 
+// This function clears the terminal screen.
+func ClearScreen() {
+	if runtime.GOOS == "windows" {
+		cmd := exec.Command("cmd", "/c", "cls")
+		cmd.Stdout = os.Stdout
+		cmd.Run()
+	} else {
+		cmd := exec.Command("clear")
+		cmd.Stdout = os.Stdout
+		cmd.Run()
+	}
+}
+
 func main() {
 
 	todoList = append(todoList, Tugas{Deskripsi: "Belajar Go", Status: true})
 	todoList = append(todoList, Tugas{Deskripsi: "Belajar Struct", Status: false})
 	todoList = append(todoList, Tugas{Deskripsi: "Belajar Array", Status: false})
 	var menu int = 0
+
 	fmt.Println("===TODO LIST===")
 	fmt.Println("1. Tambah Tugas")
 	fmt.Println("2. Lihat Tugas")
@@ -28,6 +48,20 @@ func main() {
 	switch menu {
 	case 1:
 		fmt.Println("===Tambah Tugas===")
+		fmt.Print("Deskripsi : ")
+		reader := bufio.NewReader(os.Stdin)
+		bufio.NewReader(os.Stdin)
+		teks, _ := reader.ReadString('\n')
+
+		todoList = append(todoList, Tugas{Deskripsi: teks, Status: false})
+
+		for i, task := range todoList {
+			status := "[ ]"
+			if task.Status {
+				status = "[x]"
+			}
+			fmt.Printf("%d. %s %s\n", i+1, status, task.Deskripsi)
+		}
 	case 2:
 		fmt.Println("===Lihat Tugas===")
 
@@ -45,5 +79,9 @@ func main() {
 		fmt.Println("===Hapus Tugas===")
 	case 5:
 		fmt.Println("===Keluar===")
+
+	default:
+		// ClearScreen()
+
 	}
 }
