@@ -15,6 +15,7 @@ type Tugas struct {
 }
 
 var todoList []Tugas
+var back bool = true
 
 // This function clears the terminal screen.
 func ClearScreen() {
@@ -45,49 +46,69 @@ func main() {
 	todoList = append(todoList, Tugas{Deskripsi: "Belajar Array", Status: false})
 	var menu int = 0
 	var no int = 0
-	fmt.Println("===TODO LIST===")
-	fmt.Println("1. Tambah Tugas")
-	fmt.Println("2. Lihat Tugas")
-	fmt.Println("3. Tandai Tugas")
-	fmt.Println("4. Hapus Tugas")
-	fmt.Println("5. Keluar")
-	fmt.Print("Pilh Menu : ")
-	fmt.Scanln(&menu)
 
-	switch menu {
-	case 1:
-		fmt.Println("===Tambah Tugas===")
-		fmt.Print("Deskripsi : ")
-		reader := bufio.NewReader(os.Stdin)
-		bufio.NewReader(os.Stdin)
-		teks, _ := reader.ReadString('\n')
+	for back {
 
-		todoList = append(todoList, Tugas{Deskripsi: teks, Status: false})
-		lihatTugas()
-	case 2:
-		fmt.Println("===Lihat Tugas===")
-		lihatTugas()
+		fmt.Println("===TODO LIST===")
+		fmt.Println("1. Tambah Tugas")
+		fmt.Println("2. Lihat Tugas")
+		fmt.Println("3. Tandai Tugas")
+		fmt.Println("4. Hapus Tugas")
+		fmt.Println("5. Keluar")
+		fmt.Print("Pilh Menu : ")
+		fmt.Scanln(&menu)
 
-	case 3:
-		fmt.Println("===Tandai Tugas===")
-		lihatTugas()
-		fmt.Print("Tandai Nomor : ")
-		fmt.Scanln(&no)
-		todoList[no-1].Status = true
-		lihatTugas()
+		switch menu {
+		case 1:
+			fmt.Println("===Tambah Tugas===")
+			fmt.Print("Deskripsi : ")
+			reader := bufio.NewReader(os.Stdin)
+			bufio.NewReader(os.Stdin)
+			teks, _ := reader.ReadString('\n')
 
-	case 4:
-		fmt.Println("===Hapus Tugas===")
-		lihatTugas()
-		fmt.Print("Hapus Nomor : ")
-		fmt.Scanln(&no)
-		todoList = append(todoList[:no-1], todoList[no:]...)
-		lihatTugas()
-	case 5:
-		fmt.Println("===Keluar===")
+			todoList = append(todoList, Tugas{Deskripsi: teks, Status: false})
+			lihatTugas()
+			fmt.Print("back ? ")
+			fmt.Scanln(&back)
+			ClearScreen()
 
-	default:
-		// ClearScreen()
+		case 2:
+			fmt.Println("===Lihat Tugas===")
+			lihatTugas()
+			fmt.Print("back ? ")
 
+			fmt.Scanln(&back)
+			ClearScreen()
+
+		case 3:
+			fmt.Println("===Tandai Tugas===")
+			lihatTugas()
+			fmt.Print("Tandai Nomor : ")
+			fmt.Scanln(&no)
+			todoList[no-1].Status = true
+			lihatTugas()
+			fmt.Print("back ? ")
+
+			fmt.Scanln(&back)
+			ClearScreen()
+
+		case 4:
+			fmt.Println("===Hapus Tugas===")
+			lihatTugas()
+			fmt.Print("Hapus Nomor : ")
+			fmt.Scanln(&no)
+			todoList = append(todoList[:no-1], todoList[no:]...)
+			lihatTugas()
+			fmt.Print("back ? ")
+			fmt.Scanln(&back)
+			ClearScreen()
+
+		case 5:
+			fmt.Println("===Keluar===")
+			back = false
+		default:
+			// ClearScreen()
+
+		}
 	}
 }
