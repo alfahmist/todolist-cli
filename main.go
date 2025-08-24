@@ -29,13 +29,22 @@ func ClearScreen() {
 	}
 }
 
+func lihatTugas() {
+	for i, task := range todoList {
+		status := "[ ]"
+		if task.Status {
+			status = "[x]"
+		}
+		fmt.Printf("%d. %s %s\n", i+1, status, task.Deskripsi)
+	}
+}
 func main() {
 
 	todoList = append(todoList, Tugas{Deskripsi: "Belajar Go", Status: true})
 	todoList = append(todoList, Tugas{Deskripsi: "Belajar Struct", Status: false})
 	todoList = append(todoList, Tugas{Deskripsi: "Belajar Array", Status: false})
 	var menu int = 0
-
+	var no int = 0
 	fmt.Println("===TODO LIST===")
 	fmt.Println("1. Tambah Tugas")
 	fmt.Println("2. Lihat Tugas")
@@ -54,27 +63,19 @@ func main() {
 		teks, _ := reader.ReadString('\n')
 
 		todoList = append(todoList, Tugas{Deskripsi: teks, Status: false})
-
-		for i, task := range todoList {
-			status := "[ ]"
-			if task.Status {
-				status = "[x]"
-			}
-			fmt.Printf("%d. %s %s\n", i+1, status, task.Deskripsi)
-		}
+		lihatTugas()
 	case 2:
 		fmt.Println("===Lihat Tugas===")
-
-		for i, task := range todoList {
-			status := "[ ]"
-			if task.Status {
-				status = "[x]"
-			}
-			fmt.Printf("%d. %s %s\n", i+1, status, task.Deskripsi)
-		}
+		lihatTugas()
 
 	case 3:
 		fmt.Println("===Tandai Tugas===")
+		lihatTugas()
+		fmt.Print("Tandai Nomor : ")
+		fmt.Scanln(&no)
+		todoList[no-1].Status = true
+		lihatTugas()
+
 	case 4:
 		fmt.Println("===Hapus Tugas===")
 	case 5:
